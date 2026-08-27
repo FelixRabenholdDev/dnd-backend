@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/dnd_characters
+    username: dnd_dev
+    password: devpassword
+  jpa:
+    hibernate:
+      ddl-auto: none

@@ -5,4 +5,4 @@ spring:
     password: devpassword
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate

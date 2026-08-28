@@ -6,6 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "player_characters")
@@ -15,11 +19,17 @@ public class PlayerCharacter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     private String name;
+
     private String characterClass;
     private String race;
+
+    @Min(1)
     private int level;
 
+    @NotNull
+    @Valid
     @Embedded
     private CharacterStatsEmbeddable stats;
 

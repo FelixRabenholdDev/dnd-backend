@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class CharacterController {
     }
 
     @PostMapping
-    public PlayerCharacter createCharacter(@RequestBody PlayerCharacter character) {
+    public PlayerCharacter createCharacter(@Valid @RequestBody PlayerCharacter character) {
         return characterService.save(character);
     }
 }

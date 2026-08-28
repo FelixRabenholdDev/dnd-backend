@@ -2,6 +2,8 @@ package de.felixrabenhold.dnd_backend;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +20,17 @@ public class CharacterController {
     }
 
     @GetMapping
-    public  List<CharacterStats> getAllCharacters() {
+    public  List<PlayerCharacter> getAllCharacters() {
         return characterService.findAll();
     }
 
     @GetMapping("/strong/{threshold}")
-    public List<CharacterStats> getStrongCharacters(@PathVariable int threshold) {
+    public List<PlayerCharacter> getStrongCharacters(@PathVariable int threshold) {
         return characterService.findStrongerThan(threshold);
+    }
+
+    @PostMapping
+    public PlayerCharacter createCharacter(@RequestBody PlayerCharacter character) {
+        return characterService.save(character);
     }
 }

@@ -7,19 +7,23 @@ import java.util.List;
 @Service
 public class CharacterService {
 
-    private final List<CharacterStats> allCharacters = List.of(
-            new CharacterStats(15, 14, 13, 12, 10, 8),
-            new CharacterStats(8, 16, 12, 14, 13, 10),
-            new CharacterStats(18, 10, 15, 8, 12, 14)
-    );
+    private final PlayerCharacterRepository repository;
 
-    public List<CharacterStats> findAll() {
-        return allCharacters;
+    public CharacterService(PlayerCharacterRepository repository) {
+        this.repository = repository;
     }
 
-    public List<CharacterStats> findStrongerThan(int strengthThreshold) {
-        return allCharacters.stream()
-                .filter(c -> c.strength() >= strengthThreshold)
+    public List<PlayerCharacter> findAll() {
+        return repository.findAll();
+    }
+
+    public List<PlayerCharacter> findStrongerThan(int strengthThreshold) {
+        return repository.findAll().stream()
+                .filter(c -> c.getStats().getStrength() >= strengthThreshold)
                 .toList();
+    }
+
+    public PlayerCharacter save(PlayerCharacter character) {
+        return repository.save(character);
     }
 }

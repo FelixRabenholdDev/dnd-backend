@@ -61,4 +61,15 @@ public class PlayerCharacter {
 
     public CharacterStatsEmbeddable getStats() { return stats; }
     public void setStats(CharacterStatsEmbeddable stats) { this.stats = stats; }
+
+    public int getProficiencyBonus() {
+        return switch (level) {
+            case 1, 2, 3, 4 -> 2;
+            case 5, 6, 7, 8 -> 3;
+            case 9, 10, 11, 12 -> 4;
+            case 13, 14, 15, 16 -> 5;
+            case 17, 18, 19, 20 -> 6;
+            default -> throw new IllegalStateException("Unerwartetes Level: " + level);
+        };
+    }
 }

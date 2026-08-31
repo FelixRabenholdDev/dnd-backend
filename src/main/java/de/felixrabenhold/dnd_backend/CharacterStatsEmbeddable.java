@@ -61,4 +61,32 @@ public class CharacterStatsEmbeddable {
 
     public int getCharisma() { return charisma; }
     public void setCharisma(int charisma) { this.charisma = charisma; }
+
+    public int getStrengthModifier() {
+        return calculateModifier(strength);
+    }
+
+    public int getDexterityModifier() {
+        return calculateModifier(dexterity);
+    }
+
+    public int getConstitutionModifier() {
+        return calculateModifier(constitution);
+    }
+
+    public int getIntelligenceModifier() {
+        return calculateModifier(intelligence);
+    }
+
+    public int getWisdomModifier() {
+        return calculateModifier(wisdom);
+    }
+
+    public int getCharismaModifier() {
+        return calculateModifier(charisma);
+    }
+
+    private int calculateModifier(int attributeValue) {
+        return Math.floorDiv(attributeValue - 10, 2);
+    }
 }

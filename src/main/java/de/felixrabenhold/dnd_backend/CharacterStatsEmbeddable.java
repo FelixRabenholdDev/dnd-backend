@@ -62,9 +62,7 @@ public class CharacterStatsEmbeddable {
     public int getCharisma() { return charisma; }
     public void setCharisma(int charisma) { this.charisma = charisma; }
 
-    public int getStrengthModifier() {
-        return calculateModifier(strength);
-    }
+    public int getStrengthModifier() { return calculateModifier(strength); }
 
     public int getDexterityModifier() {
         return calculateModifier(dexterity);

@@ -1,5 +1,6 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.character;
 
+import de.felixrabenhold.dnd_backend.auth.AppUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

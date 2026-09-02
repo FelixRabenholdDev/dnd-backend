@@ -1,5 +1,7 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.character;
 
+import de.felixrabenhold.dnd_backend.auth.AppUser;
+import de.felixrabenhold.dnd_backend.auth.AppUserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

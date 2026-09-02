@@ -1,4 +1,4 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.character;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,5 +1,6 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.config;
 
+import de.felixrabenhold.dnd_backend.auth.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

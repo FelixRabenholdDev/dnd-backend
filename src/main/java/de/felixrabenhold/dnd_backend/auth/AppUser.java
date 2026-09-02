@@ -1,4 +1,4 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.auth;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

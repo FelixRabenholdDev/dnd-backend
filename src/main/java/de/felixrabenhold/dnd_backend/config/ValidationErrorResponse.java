@@ -1,4 +1,4 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.config;
 
 import java.time.Instant;
 import java.util.Map;

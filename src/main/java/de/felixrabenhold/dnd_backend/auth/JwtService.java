@@ -1,4 +1,4 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.auth;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

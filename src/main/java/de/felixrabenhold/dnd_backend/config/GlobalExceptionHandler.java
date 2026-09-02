@@ -1,4 +1,4 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.config;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.character;
 
 import org.junit.jupiter.api.Test;
 

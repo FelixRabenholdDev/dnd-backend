@@ -1,6 +1,7 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.character;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.felixrabenhold.dnd_backend.auth.AppUser;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;

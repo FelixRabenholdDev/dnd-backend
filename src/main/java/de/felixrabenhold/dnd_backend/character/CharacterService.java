@@ -1,5 +1,7 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.character;
 
+import de.felixrabenhold.dnd_backend.auth.AppUser;
+import de.felixrabenhold.dnd_backend.auth.CurrentUserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

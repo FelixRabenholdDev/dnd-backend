@@ -1,4 +1,4 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.character;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.Max;

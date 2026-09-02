@@ -1,4 +1,4 @@
-package de.felixrabenhold.dnd_backend;
+package de.felixrabenhold.dnd_backend.auth;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

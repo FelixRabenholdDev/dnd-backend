@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "player_characters")
@@ -33,16 +35,21 @@ public class PlayerCharacter {
     @Embedded
     private CharacterStatsEmbeddable stats;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private AppUser owner;
+
     protected PlayerCharacter() {
         //leer für Hibernate
     }
 
-    public PlayerCharacter(String name, String characterClass, String race, int level, CharacterStatsEmbeddable stats) {
+    public PlayerCharacter(String name, String characterClass, String race, int level, CharacterStatsEmbeddable stats, AppUser owner) {
         this.name = name;
         this.characterClass = characterClass;
         this.race = race;
         this.level = level;
         this.stats = stats;
+        this.owner = owner;
     }
 
     public Long getId() { return id; }
@@ -61,6 +68,9 @@ public class PlayerCharacter {
 
     public CharacterStatsEmbeddable getStats() { return stats; }
     public void setStats(CharacterStatsEmbeddable stats) { this.stats = stats; }
+
+    public AppUser getOwner() { return owner; }
+    public void setOwner(AppUser owner) {this.owner = owner; }
 
     public int getProficiencyBonus() {
         return switch (level) {

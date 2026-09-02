@@ -22,11 +22,18 @@ class PlayerCharacterRepositoryIntegrationTest {
     @Autowired
     private PlayerCharacterRepository repository;
 
+    @Autowired
+    private AppUserRepository userRepository;
+
     @Test
     void savedCharacterCanBeRetrievedFromDatabase() {
+        AppUser owner = new AppUser("integrationtestuser", "irrelevanterHash");
+        userRepository.save(owner);
+
         PlayerCharacter character = new PlayerCharacter(
                 "Integration Test Hero", "Rogue", "Halfling", 3,
-                new CharacterStatsEmbeddable(12, 18, 13, 10, 14, 11)
+                new CharacterStatsEmbeddable(12, 18, 13, 10, 14, 11),
+                owner
         );
 
         PlayerCharacter saved = repository.save(character);

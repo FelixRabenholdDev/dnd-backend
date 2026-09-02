@@ -21,17 +21,26 @@ public class CharacterController {
     }
 
     @GetMapping
-    public  List<PlayerCharacter> getAllCharacters() {
-        return characterService.findAll();
+    public  List<PlayerCharacterResponse> getAllCharacters() {
+        return characterService.findAll().stream()
+                .map(PlayerCharacterResponse::fromEntity)
+                .toList();
+    }
+
+    @GetMapping("/{id}")
+    public PlayerCharacterResponse getCharacterById(@PathVariable Long id) {
+        return PlayerCharacterResponse.fromEntity(characterService.findByIdForCurrentUser(id));
     }
 
     @GetMapping("/strong/{threshold}")
-    public List<PlayerCharacter> getStrongCharacters(@PathVariable int threshold) {
-        return characterService.findStrongerThan(threshold);
+    public List<PlayerCharacterResponse> getStrongCharacters(@PathVariable int threshold) {
+        return characterService.findStrongerThan(threshold).stream()
+                .map(PlayerCharacterResponse::fromEntity)
+                .toList();
     }
 
     @PostMapping
-    public PlayerCharacter createCharacter(@Valid @RequestBody PlayerCharacter character) {
-        return characterService.save(character);
+    public PlayerCharacterResponse createCharacter(@Valid @RequestBody PlayerCharacter character) {
+        return PlayerCharacterResponse.fromEntity(characterService.save(character));
     }
 }

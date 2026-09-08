@@ -69,7 +69,9 @@ Vollständige, immer aktuelle Dokumentation aller Endpoints: siehe Swagger-UI.
 
 ## Projektstruktur
 
+```
 src/main/java/de/felixrabenhold/dnd_backend/
-├── character/ Charakter-Domäne (Entity, Repository, Service, Controller)
-├── auth/ Authentifizierung & Autorisierung (JWT, User-Verwaltung)
-└── config/ Technische Konfiguration (Security, OpenAPI, Fehlerbehandlung)
+├── character/     Charakter-Domäne (Entity, Repository, Service, Controller)
+├── auth/          Authentifizierung & Autorisierung (JWT, User-Verwaltung)
+└── config/        Technische Konfiguration (Security, OpenAPI, Fehlerbehandlung)
+```

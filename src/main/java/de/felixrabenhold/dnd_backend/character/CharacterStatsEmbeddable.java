@@ -3,6 +3,7 @@ package de.felixrabenhold.dnd_backend.character;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import java.util.List;
 
 @Embeddable
 public class CharacterStatsEmbeddable {
@@ -86,5 +87,9 @@ public class CharacterStatsEmbeddable {
 
     private int calculateModifier(int attributeValue) {
         return Math.floorDiv(attributeValue - 10, 2);
+    }
+
+    public List<Integer> asList() {
+        return List.of(strength, dexterity, constitution, intelligence, wisdom, charisma);
     }
 }

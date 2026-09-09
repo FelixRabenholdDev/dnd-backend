@@ -1,19 +1,15 @@
 package de.felixrabenhold.dnd_backend.character;
 
 import de.felixrabenhold.dnd_backend.auth.AppUser;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import de.felixrabenhold.dnd_backend.character.generation.GenerationMethod;
+import de.felixrabenhold.dnd_backend.character.generation.ValidAbilityScoreGeneration;
+import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
 
+@ValidAbilityScoreGeneration
 @Entity
 @Table(name = "player_characters")
 public class PlayerCharacter {
@@ -39,6 +35,10 @@ public class PlayerCharacter {
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private AppUser owner;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private GenerationMethod generationMethod;
 
     protected PlayerCharacter() {
         //leer für Hibernate
@@ -83,4 +83,7 @@ public class PlayerCharacter {
             default -> throw new IllegalStateException("Unerwartetes Level: " + level);
         };
     }
+
+    public GenerationMethod getGenerationMethod() { return generationMethod; }
+    public void setGenerationMethod(GenerationMethod generationMethod) { this.generationMethod = generationMethod; }
 }

@@ -1,12 +1,17 @@
 package de.felixrabenhold.dnd_backend.character;
 
+import de.felixrabenhold.dnd_backend.character.generation.GenerationMethod;
+
 public record PlayerCharacterResponse(
         Long id,
         String name,
-        String characterClass,
-        String race,
+        String raceName,
+        String className,
+        String backgroundName,
         int level,
-        CharacterStatsEmbeddable stats,
+        GenerationMethod generationMethod,
+        CharacterStatsEmbeddable baseStats,
+        EffectiveAbilityScores effectiveStats,
         int proficiencyBonus,
         String ownerUsername
 ) {
@@ -14,10 +19,13 @@ public record PlayerCharacterResponse(
         return new PlayerCharacterResponse(
                 character.getId(),
                 character.getName(),
-                character.getCharacterClass(),
-                character.getRace(),
+                character.getRace().getName(),
+                character.getCharacterClass().getName(),
+                character.getBackground().getName(),
                 character.getLevel(),
+                character.getGenerationMethod(),
                 character.getStats(),
+                EffectiveAbilityScores.fromCharacter(character),
                 character.getProficiencyBonus(),
                 character.getOwner().getUsername()
         );

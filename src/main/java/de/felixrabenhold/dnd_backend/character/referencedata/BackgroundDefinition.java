@@ -1,5 +1,6 @@
 package de.felixrabenhold.dnd_backend.character.referencedata;
 
+import de.felixrabenhold.dnd_backend.character.Ability;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;

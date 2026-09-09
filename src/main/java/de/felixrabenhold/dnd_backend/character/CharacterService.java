@@ -2,6 +2,12 @@ package de.felixrabenhold.dnd_backend.character;
 
 import de.felixrabenhold.dnd_backend.auth.AppUser;
 import de.felixrabenhold.dnd_backend.auth.CurrentUserService;
+import de.felixrabenhold.dnd_backend.character.referencedata.BackgroundDefinition;
+import de.felixrabenhold.dnd_backend.character.referencedata.BackgroundDefinitionRepository;
+import de.felixrabenhold.dnd_backend.character.referencedata.CharacterClassDefinition;
+import de.felixrabenhold.dnd_backend.character.referencedata.CharacterClassDefinitionRepository;
+import de.felixrabenhold.dnd_backend.character.referencedata.RaceDefinition;
+import de.felixrabenhold.dnd_backend.character.referencedata.RaceDefinitionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,10 +17,22 @@ public class CharacterService {
 
     private final PlayerCharacterRepository repository;
     private final CurrentUserService currentUserService;
+    private final RaceDefinitionRepository raceRepository;
+    private final CharacterClassDefinitionRepository classRepository;
+    private final BackgroundDefinitionRepository backgroundRepository;
 
-    public CharacterService(PlayerCharacterRepository repository, CurrentUserService currentUserService) {
+    public CharacterService(
+            PlayerCharacterRepository repository,
+            CurrentUserService currentUserService,
+            RaceDefinitionRepository raceRepository,
+            CharacterClassDefinitionRepository classRepository,
+            BackgroundDefinitionRepository backgroundRepository
+    ) {
         this.repository = repository;
         this.currentUserService = currentUserService;
+        this.raceRepository = raceRepository;
+        this.classRepository = classRepository;
+        this.backgroundRepository = backgroundRepository;
     }
 
     public List<PlayerCharacter> findAll() {
@@ -39,5 +57,24 @@ public class CharacterService {
         AppUser currentUser = currentUserService.getCurrentUser();
         return repository.findByIdAndOwner(id, currentUser)
                 .orElseThrow(() -> new IllegalArgumentException("Charakter nicht gefunden"));
+    }
+
+    public PlayerCharacter createFromRequest(PlayerCharacterCreateRequest request) {
+        AppUser currentUser = currentUserService.getCurrentUser();
+
+        RaceDefinition race = raceRepository.findById(request.raceId())
+                .orElseThrow(() -> new IllegalArgumentException("Unbekannte Rasse: " + request.raceId()));
+        CharacterClassDefinition characterClass = classRepository.findById(request.classId())
+                .orElseThrow(() -> new IllegalArgumentException("Unbekannte Klasse: " + request.classId()));
+        BackgroundDefinition background = backgroundRepository.findById(request.backgroundId())
+                .orElseThrow(() -> new IllegalArgumentException("Unbekannter Background: " + request.backgroundId()));
+
+        PlayerCharacter character = new PlayerCharacter(
+                request.name(), race, characterClass, background, request.level(),
+                request.generationMethod(), request.stats(), request.backgroundBonuses()
+        );
+        character.setOwner(currentUser);
+
+        return repository.save(character);
     }
 }

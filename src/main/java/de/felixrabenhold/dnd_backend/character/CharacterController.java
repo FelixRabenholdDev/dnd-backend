@@ -40,7 +40,7 @@ public class CharacterController {
     }
 
     @PostMapping
-    public PlayerCharacterResponse createCharacter(@Valid @RequestBody PlayerCharacter character) {
-        return PlayerCharacterResponse.fromEntity(characterService.save(character));
+    public PlayerCharacterResponse createCharacter(@Valid @RequestBody PlayerCharacterCreateRequest request) {
+        return PlayerCharacterResponse.fromEntity(characterService.createFromRequest(request));
     }
 }

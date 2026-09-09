@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import jakarta.validation.ConstraintViolationException;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -37,6 +38,21 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST.value(),
                 ex.getMessage(),
                 Map.of()
+        );
+
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ValidationErrorResponse> handleConstraintViolation(ConstraintViolationException ex) {
+        Map<String, String> fieldErrors = new HashMap<>();
+
+        ex.getConstraintViolations().forEach(violation ->
+                fieldErrors.put(violation.getPropertyPath().toString(), violation.getMessage())
+        );
+
+        ValidationErrorResponse response = new ValidationErrorResponse(
+                Instant.now(), HttpStatus.BAD_REQUEST.value(), "Validation failed", fieldErrors
         );
 
         return ResponseEntity.badRequest().body(response);

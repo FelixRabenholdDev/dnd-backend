@@ -12,6 +12,7 @@ Spring-Boot-API für die Verwaltung von D&D-5e-(2024)-Charakteren — Teil des
 - Spring Security + JWT (zustandslose Authentifizierung)
 - springdoc-openapi (interaktive API-Dokumentation)
 - JUnit 5 + Testcontainers
+- Mockito (Unit-Tests für isolierte Validierungslogik)
 
 ## Voraussetzungen
 
@@ -64,6 +65,10 @@ automatisch eine temporäre, isolierte PostgreSQL-Instanz für die Testdauer ges
 | GET | `/api/characters` | Eigene Charaktere auflisten | Ja |
 | GET | `/api/characters/{id}` | Einzelnen Charakter abrufen | Ja |
 | POST | `/api/characters` | Neuen Charakter anlegen | Ja |
+| GET | `/api/reference-data/races` | Verfügbare Rassen auflisten | Nein |
+| GET | `/api/reference-data/classes` | Verfügbare Klassen auflisten | Nein |
+| GET | `/api/reference-data/backgrounds` | Verfügbare Backgrounds auflisten | Nein |
+| GET | `/api/characters/roll-ability-scores` | Sechs Attributswerte würfeln (4W6, niedrigsten verwerfen) | Ja |
 
 Vollständige, immer aktuelle Dokumentation aller Endpoints: siehe Swagger-UI.
 

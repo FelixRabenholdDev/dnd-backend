@@ -1,5 +1,7 @@
 package de.felixrabenhold.dnd_backend.character;
 
+import de.felixrabenhold.dnd_backend.character.generation.AbilityScoreRoller;
+import de.felixrabenhold.dnd_backend.character.generation.RolledAbilityScore;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +39,11 @@ public class CharacterController {
         return characterService.findStrongerThan(threshold).stream()
                 .map(PlayerCharacterResponse::fromEntity)
                 .toList();
+    }
+
+    @GetMapping("/roll-ability-scores")
+    public List<RolledAbilityScore> rollAbilityScores() {
+        return AbilityScoreRoller.rollSixScores();
     }
 
     @PostMapping

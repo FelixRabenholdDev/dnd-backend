@@ -30,6 +30,7 @@ public class AbilityScoreGenerationValidator implements ConstraintValidator<Vali
         return switch (character.getGenerationMethod()) {
             case STANDARD_ARRAY -> isValidStandardArray(scores, context);
             case POINT_BUY -> isValidPointBuy(scores, context);
+            case ROLLED -> isValidRolled(scores, context);
         };
     }
 
@@ -58,6 +59,16 @@ public class AbilityScoreGenerationValidator implements ConstraintValidator<Vali
 
         if (totalCost > POINT_BUY_BUDGET) {
             addViolation(context, "Point-Buy-Budget überschritten: " + totalCost + " von " + POINT_BUY_BUDGET + " Punkten verwendet");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isValidRolled(List<Integer> scores, ConstraintValidatorContext context) {
+        boolean allInRange = scores.stream().allMatch(score -> score >= 3 && score <= 18);
+
+        if (!allInRange) {
+            addViolation(context, "Gewürfelte Attributswerte müssen zwischen 3 und 18 liegen");
             return false;
         }
         return true;

@@ -13,12 +13,13 @@ Spring-Boot-API für die Verwaltung von D&D-5e-(2024)-Charakteren — Teil des
 - springdoc-openapi (interaktive API-Dokumentation)
 - JUnit 5 + Testcontainers
 - Mockito (Unit-Tests für isolierte Validierungslogik)
+- Docker (Multi-Stage-Build für ein schlankes, produktionsnahes Image)
 
 ## Voraussetzungen
 
 - Java 21
 - Maven (oder der mitgelieferte Wrapper `./mvnw`)
-- Docker (für die lokale PostgreSQL-Instanz)
+- Docker (für die lokale PostgreSQL-Instanz bzw. für den Container-Betrieb)
 
 ## Lokal starten
 
@@ -40,12 +41,33 @@ Spring-Boot-API für die Verwaltung von D&D-5e-(2024)-Charakteren — Teil des
 
 Die API läuft danach unter `http://localhost:8080`.
 
+## Mit Docker starten
+
+Das Repository enthält ein Multi-Stage-`Dockerfile` (JDK-Build-Stage, JRE-Runtime-Stage,
+Ausführung als Nicht-root-Nutzer). Eigenständiger Test des Images gegen eine bereits laufende
+Postgres-Instanz:
+
+```bash
+docker build -t dnd-backend:local .
+docker run --name dnd-backend-test \
+  --network host \
+  -e SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/dnd_characters \
+  -e SPRING_DATASOURCE_USERNAME=dnd_dev \
+  -e SPRING_DATASOURCE_PASSWORD=devpassword \
+  -e JWT_SECRET=<beliebiger-hex-string> \
+  -d dnd-backend:local
+```
+
+Für den vollständigen Stack (Backend + Frontend + Postgres, mit korrekter Startreihenfolge und
+`.env`-basierter Konfiguration) siehe stattdessen das `docker-compose.yml` im Meta-Repo
+[pnp-character-manager](https://github.com/FelixRabenholdDev/pnp-character-manager) — das ist der
+empfohlene Weg für den normalen Betrieb.
+
 ## API-Dokumentation
 
 Interaktive Swagger-UI, sobald die Anwendung läuft:
 
 http://localhost:8080/swagger-ui.html
-
 
 ## Tests ausführen
 
@@ -76,7 +98,9 @@ Vollständige, immer aktuelle Dokumentation aller Endpoints: siehe Swagger-UI.
 
 ```
 src/main/java/de/felixrabenhold/dnd_backend/
-├── character/     Charakter-Domäne (Entity, Repository, Service, Controller)
-├── auth/          Authentifizierung & Autorisierung (JWT, User-Verwaltung)
-└── config/        Technische Konfiguration (Security, OpenAPI, Fehlerbehandlung)
+├── character/
+│   ├── generation/       Erstellungsmethoden & Validierung (Point Buy, Standard Array, Würfeln)
+│   └── referencedata/    Rassen-, Klassen- und Background-Definitionen
+├── auth/                 Authentifizierung & Autorisierung (JWT, User-Verwaltung)
+└── config/               Technische Konfiguration (Security, OpenAPI, Fehlerbehandlung)
 ```
